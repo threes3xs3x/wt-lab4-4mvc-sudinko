@@ -1,0 +1,47 @@
+@model List<Flight>
+
+@{
+    ViewData["Title"] = "Рейсы";
+}
+
+<div class="container py-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="fw-bold">Каталог рейсов</h1>
+            <p class="text-muted">Количество рейсов: @Model.Count</p>
+        </div>
+        <a asp-action="Create" class="btn btn-primary">Добавить рейс</a>
+    </div>
+
+    <div class="row g-4">
+        @foreach (var flight in Model)
+        {
+            <div class="col-12 col-md-6 col-lg-4">
+                                <div class="card h-100 shadow-sm rounded-4 flight-card">
+                    <div class="card-body">
+                        <span class="badge bg-secondary mb-2">Рейс @flight.Number</span>
+                        @if (flight.IsAvailable)
+                        {
+                            <span class="badge bg-success mb-2">Есть места</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger mb-2">Мест нет</span>
+                        }
+                        <h5 class="card-title">@flight.From → @flight.To</h5>
+                        <p class="fs-4 fw-bold">@flight.Price руб.</p>
+                                                <div class="d-flex gap-2">
+                            <a asp-action="Details" asp-route-id="@flight.Id" class="btn btn-outline-primary">
+                                Подробнее
+                            </a>
+                            <form asp-action="Delete" asp-route-id="@flight.Id" method="post"
+                                  onsubmit="return confirm('Удалить рейс @flight.Number?');">
+                                <button type="submit" class="btn btn-outline-danger">Удалить</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

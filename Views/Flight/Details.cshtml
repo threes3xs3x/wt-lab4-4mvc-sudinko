@@ -1,0 +1,31 @@
+@model Flight
+
+@{
+    ViewData["Title"] = "Рейс " + Model.Number;
+}
+
+<div class="container py-4">
+    <div class="card shadow-sm rounded-4">
+        <div class="card-body p-4">
+            <span class="badge bg-secondary mb-2">ID: @Model.Id</span>
+            <h2 class="fw-bold mb-3">Рейс @Model.Number</h2>
+
+            <p class="mb-1"><strong>Откуда:</strong> @Model.From</p>
+            <p class="mb-1"><strong>Куда:</strong> @Model.To</p>
+            <p class="mb-1"><strong>Цена:</strong> @Model.Price руб.</p>
+            <p class="mb-3">
+                <strong>Статус:</strong>
+                @if (Model.IsAvailable)
+                {
+                    <span class="badge bg-success">Есть места</span>
+                }
+                else
+                {
+                    <span class="badge bg-danger">Мест нет</span>
+                }
+            </p>
+
+            <a asp-action="Index" class="btn btn-secondary">Назад к списку</a>
+        </div>
+    </div>
+</div>
